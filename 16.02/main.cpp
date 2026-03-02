@@ -8,7 +8,7 @@ template< class T > struct BiList {
 
 template< class T >
 BiList< T >* add(BiList< T >* h, T v) {
-  BiList< T >* newNode = new BiList< T >{v, h, nullptr};
+  BiList< T >* newNode = new BiList< T >{v, h, nullptr}; //копирование
   if (h) {
     if (h->prev) {
       h->prev->next = newNode;
@@ -20,7 +20,7 @@ BiList< T >* add(BiList< T >* h, T v) {
 
 template< class T >
 BiList< T >* insert(BiList< T >* node, T v) {
-  BiList< T >* newNode = new BiList< T >{v, nullptr, node};
+  BiList< T >* newNode = new BiList< T >{v, nullptr, node}; //копирование
   if (node) {
     if (node->next) {
       node->next->prev = newNode;
@@ -61,17 +61,33 @@ void clear(BiList< T >* b, BiList< T >* e) {
   }
 }
 
-template<class T>
-void printList(BiList<T>* head) {
-    std::cout << "Список: ";
-    while (head) {
-        std::cout << head->val << " -> ";
-        head = head->next;
-    }
-    std::cout << "\n";
+template< class T >
+void printList(BiList< T >* head) {
+  std::cout << "Список: ";
+  while (head) {
+    std::cout << head->val << " -> "; //Должен выводиться
+    head = head->next;
+  }
+  std::cout << "\n";
 }
 
-
+template< class T >
+BiList< T >* arrToList(const T* arr, size_t s) {
+  BiList< T >* head = nullptr;
+  BiList< T >* tail = nullptr;
+  if (!s or !arr) {
+    return nullptr;
+  }
+  for (size_t i = 0; i < s; i++) {
+    if (!head) {
+      head = add(head, arr[i]);
+      tail = head;
+    } else {
+      tail = insert(tail, arr[i]);
+    }
+  }
+  return head;
+}
 
 int main()
 {

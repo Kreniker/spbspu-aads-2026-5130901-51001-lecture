@@ -52,6 +52,13 @@ BiList< T >* erase(BiList< T >* node) {
   return node;
 }
 
+template< class T >
+void clear(BiList< T >* b, BiList< T >* e) {
+  while (b != e) {
+    b = cut(b);
+  }
+}
+
 int main()
 {
   

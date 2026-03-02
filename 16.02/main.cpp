@@ -1,3 +1,5 @@
+#include <iostream>
+
 template< class T > struct BiList {
   T val;
   BiList< T >* next;
@@ -58,6 +60,18 @@ void clear(BiList< T >* b, BiList< T >* e) {
     b = cut(b);
   }
 }
+
+template<class T>
+void printList(BiList<T>* head) {
+    std::cout << "Список: ";
+    while (head) {
+        std::cout << head->val << " -> ";
+        head = head->next;
+    }
+    std::cout << "\n";
+}
+
+
 
 int main()
 {

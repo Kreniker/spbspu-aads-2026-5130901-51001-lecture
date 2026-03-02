@@ -12,6 +12,7 @@ BiList< T >* add(BiList< T >* h, T v) {
   if (h) {
     if (h->prev) {
       h->prev->next = newNode;
+      newNode->prev = h->prev;
     }
     h->prev = newNode;
   }
@@ -20,13 +21,14 @@ BiList< T >* add(BiList< T >* h, T v) {
 
 template< class T >
 BiList< T >* insert(BiList< T >* node, T v) {
-  BiList< T >* newNode = new BiList< T >{v, nullptr, node}; //копирование
-  if (node) {
-    if (node->next) {
-      node->next->prev = newNode;
-    }
-    node->next = newNode;
+  if (!node) {
+   return nullptr;
   }
+  BiList< T >* newNode = new BiList< T >{v, node->next, node};
+  if (node->next) {
+    node->next->prev = newNode;
+  }
+  node->next = newNode;
   return newNode;
 }
 
@@ -89,6 +91,16 @@ BiList< T >* arrToList(const T* arr, size_t s) {
   return head;
 }
 
+template< class T >
+void printArrAndList(T* arr, BiList< T >* list, size_t s) {
+  std::cout << "Массив: ";
+  for (size_t i = 0; i < s; i++) {
+    std::cout << arr[i] << ", ";
+  }
+  std::cout << "\n";
+  printList(list);
+}
+
 int main()
 {
   size_t size = 5;
@@ -97,14 +109,16 @@ int main()
   	arr[i] = i + 1;
   }
 
-  std::cout << "Массив: ";
-  for (size_t i = 0; i < size; i++) {
-    std::cout << arr[i] << ", ";
-  }
-  std::cout << "\n";
-
   BiList< int >* list = nullptr;
   list = arrToList(arr, size);
+
+  printArrAndList(arr, list, size);
+  list = cut(list);
   printList(list);
+  list = add(list, 67);
+  printList(list);
+
+  BiList< int >* tail = nullptr;
+  clear(list, tail);
   delete[] arr;
 }

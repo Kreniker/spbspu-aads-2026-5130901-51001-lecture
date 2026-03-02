@@ -30,15 +30,26 @@ BiList< T >* insert(BiList< T >* node, T v) {
 
 template< class T >
 BiList< T >* cut(BiList< T >* h) {
-    BiList< T >* res = h->next;
-    if (h->next) {
-      h->next->prev = h -> prev;
-    }
-    if (h->prev) {
-      h->prev->next = h->next;
-    }
-    delete h;
-    return res;
+  BiList< T >* res = h->next;
+  if (h->next) {
+    h->next->prev = h -> prev;
+  }
+  if (h->prev) {
+    h->prev->next = h->next;
+  }
+  delete h;
+  return res;
+}
+
+template< class T >
+BiList< T >* erase(BiList< T >* node) {
+  BiList< T >* toDelete = node->next;
+  if (toDelete->next) {
+    toDelete->next->prev = node;
+    node->next = toDelete->next;
+  }
+  delete toDelete;
+  return node;
 }
 
 int main()

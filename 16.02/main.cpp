@@ -91,5 +91,20 @@ BiList< T >* arrToList(const T* arr, size_t s) {
 
 int main()
 {
-  
+  size_t size = 5;
+  int* arr = new int(size);
+  for (size_t i = 0; i < size; i++) {
+  	arr[i] = i + 1;
+  }
+
+  std::cout << "Массив: ";
+  for (size_t i = 0; i < size; i++) {
+    std::cout << arr[i] << ", ";
+  }
+  std::cout << "\n";
+
+  BiList< int >* list = nullptr;
+  list = arrToList(arr, size);
+  printList(list);
+  delete[] arr;
 }

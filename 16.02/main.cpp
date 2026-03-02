@@ -8,6 +8,9 @@ template< class T >
 BiList< T >* add(BiList< T >* h, T v) {
   BiList< T >* newNode = new BiList< T >{v, h, nullptr};
   if (h) {
+    if (h->prev) {
+      h->prev->next = newNode;
+    }
     h->prev = newNode;
   }
   return newNode;
@@ -17,9 +20,25 @@ template< class T >
 BiList< T >* insert(BiList< T >* node, T v) {
   BiList< T >* newNode = new BiList< T >{v, nullptr, node};
   if (node) {
+    if (node->next) {
+      node->next->prev = newNode;
+    }
     node->next = newNode;
   }
   return newNode;
+}
+
+template< class T >
+BiList< T >* cut(BiList< T >* h) {
+    BiList< T >* res = h->next;
+    if (h->next) {
+      h->next->prev = h -> prev;
+    }
+    if (h->prev) {
+      h->prev->next = h->next;
+    }
+    delete h;
+    return res;
 }
 
 int main()
